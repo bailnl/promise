@@ -1,0 +1,22 @@
+{
+  "name": "promise",
+  "version": "0.0.1",
+  "description": "Promises/A+ implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bailnl/promise.git"
+  },
+  "keywords": [
+    "Promises/A+"
+  ],
+  "author": "bailnl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bailnl/promise/issues"
+  },
+  "homepage": "https://github.com/bailnl/promise#readme"
+}
