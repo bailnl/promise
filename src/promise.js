@@ -33,11 +33,10 @@ const resolve = (promise, x) => {
       if (isFunction(then)) {
 
         const handler = statusHandler => value => {
-            if (!isCalled) {
-              statusHandler(promise, value)
-            }
-            isCalled = true
+          if (!isCalled) {
+            statusHandler(promise, value)
           }
+          isCalled = true
         }
         then.call(promise, handler(reject), handler(fulfill))
       } else {
@@ -55,8 +54,25 @@ const resolve = (promise, x) => {
   }
 }
 
-const reject = (promise, value) => {}
-const fulfill = (promise, value) => {}
+const reject = (promise, reason) => {
+  if (promise._stauts !== PENDING) {
+    return
+  }
+  promise._stauts = REJECTED
+  promise._value = reason
+
+  invokeCallback(promise)
+}
+
+const fulfill = (promise, value) => {
+  if (promise._stauts !== PENDING) {
+    return
+  }
+  promise._stauts = FULFILLED
+  promise._value = value
+
+  invokeCallback(promise)
+}
 
 const invokeCallback = (promise) => {
   if (promise._stauts === PENDING) {
