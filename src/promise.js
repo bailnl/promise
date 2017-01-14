@@ -111,6 +111,12 @@ class Promise {
     this._stauts = PENDING
     this._value = undefined
     this._callbacks = []    
+    
+    try {
+      resolver(value => resolve(this, value), reason => reject(this, value))
+    } catch (e) {
+      reject(this, e)
+    }
   }
 
   then(onFulfilled, onRejected) {
@@ -127,7 +133,7 @@ class Promise {
     return thenPromise
   }
   
-  catch (onRejected) {
+  catch(onRejected) {
     return this.then(void 0, onRejected)
   }
 }
