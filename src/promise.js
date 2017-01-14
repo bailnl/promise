@@ -102,6 +102,7 @@ const invokeCallback = (promise) => {
 }
 
 class Promise {
+  
   constructor(resolver) {
     if (!isFunction(resolver)) {
       throw new TypeError(`Promise resolver ${resolver} is not a function`)
@@ -124,5 +125,9 @@ class Promise {
     invokeCallback(this)
 
     return thenPromise
+  }
+  
+  catch (onRejected) {
+    return this.then(void 0, onRejected)
   }
 }
