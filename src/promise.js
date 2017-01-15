@@ -102,6 +102,14 @@ const invokeCallback = (promise) => {
 }
 
 export default class Promise {
+
+  static resolve(value) {
+    return new Promise((resolve, reject) => resolve(value))
+  }
+
+  static reject(reason) {
+    return new Promise((resolve, reject) => reject(reason))
+  }
   
   constructor(resolver) {
     if (!(this instanceof Promise)) {
