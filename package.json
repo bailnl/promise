@@ -4,7 +4,7 @@
   "description": "Promises/A+ implementation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register test/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/bailnl/promise/issues"
   },
-  "homepage": "https://github.com/bailnl/promise#readme"
+  "homepage": "https://github.com/bailnl/promise#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.21.0",
+    "babel-preset-es2015": "^6.18.0",
+    "mocha": "^3.2.0",
+    "promises-aplus-tests": "^2.1.2"
+  }
 }

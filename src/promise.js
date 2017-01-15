@@ -38,7 +38,7 @@ const resolve = (promise, x) => {
           }
           isCalled = true
         }
-        then.call(promise, handler(reject), handler(fulfill))
+        then.call(x, handler(resolve), handler(reject))
       } else {
         fulfill(promise, x)
       }
@@ -84,7 +84,7 @@ const invokeCallback = (promise) => {
       
       const { 
         onFulfilled = (value => value), 
-        onRejected = (value => { throw value }), 
+        onRejected = (reason => { throw reason }), 
         thenPromise,
       } = promise._callbacks.shift()
 
@@ -101,26 +101,30 @@ const invokeCallback = (promise) => {
   })
 }
 
-class Promise {
+export default class Promise {
   
   constructor(resolver) {
+    if (!(this instanceof Promise)) {
+      throw new TypeError(`Class constructor Promise cannot be invoked without 'new'`)
+    }
+
     if (!isFunction(resolver)) {
       throw new TypeError(`Promise resolver ${resolver} is not a function`)
     }
 
     this._stauts = PENDING
     this._value = undefined
-    this._callbacks = []    
-    
+    this._callbacks = []
+
     try {
-      resolver(value => resolve(this, value), reason => reject(this, value))
+      resolver(value => resolve(this, value), reason => reject(this, reason))
     } catch (e) {
       reject(this, e)
     }
   }
 
   then(onFulfilled, onRejected) {
-    const thenPromise = this.constructor(noop)
+    const thenPromise = new this.constructor(noop)
 
     this._callbacks = this._callbacks.concat([{
       onFulfilled: isFunction(onFulfilled) ? onFulfilled : void 0,
